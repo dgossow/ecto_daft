@@ -2,12 +2,10 @@ ecto_daft
 ========================================
 
 ecto_daft contains ecto bindings to use DAFT for feature detection
-and description[1]_.
+and description [1]_.
 
-
-
-To use it, you need to put the DAFT library into your workspace:
-https://github.com/dgossow/daft.
+To use it, you need to put the DAFT library into your workspace
+(https://github.com/dgossow/daft).
 
 Dependencies
 ----------------------------------------
@@ -15,10 +13,8 @@ Dependencies
  - cmake
  - boost
  - git
- - python
- - ecto https://github.com/plasmodic/ecto
+ - ecto (https://github.com/plasmodic/ecto)
  - opencv2.3 deb from packages.ros.org, or source install from https://code.ros.org/svn/opencv/branches/2.3/opencv
- - python numpy dev libraries
 
 Code Style
 -----------------------------------------------
