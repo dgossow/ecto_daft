@@ -22,6 +22,7 @@ struct DAFT
     inputs.declare < cv::Mat > ("K", "The intrinsic camera matrix");
 
     outputs.declare < std::vector<cv::KeyPoint> > ("keypoints", "The keypoints.");
+    outputs.declare < std::vector<cv::KeyPoint3D> > ("keypoints3d", "The 3d keypoints (with 3d pose and size).");
     outputs.declare < cv::Mat > ("descriptors", "The descriptors per keypoints");
   }
 
@@ -43,10 +44,11 @@ struct DAFT
     cv::Mat image, depth;
     cv::Mat1b mask;
     cv::Matx33f K;
-    inputs["image"] >> image;
-    inputs["depth"] >> depth;
-    inputs["mask"] >> mask;
-    inputs["K"] >> K;
+
+    image = inputs.get< cv::Mat >("image");
+    depth = inputs.get< cv::Mat >("depth");
+    depth = inputs.get< cv::Mat >("mask");
+    K = inputs.get< cv::Mat >("K");
 
     cv::Mat1f descriptors;
     std::vector<cv::KeyPoint3D> keypoints3d;
@@ -61,6 +63,7 @@ struct DAFT
       keypoints[i] = keypoints3d[i];
     }
 
+    outputs["keypoints3d"] << keypoints3d;
     outputs["keypoints"] << keypoints;
     outputs["descriptors"] << descriptors;
 
@@ -70,5 +73,5 @@ struct DAFT
   cv::daft::DAFT DAFT_;
 };
 
-ECTO_CELL(features2d, DAFT, "DAFT",
+ECTO_CELL(ecto_daft, DAFT, "DAFT",
     "A DAFT detector. Takes an rgbd image and a mask, and computes keypoints and descriptors.");
