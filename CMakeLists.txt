@@ -2,11 +2,20 @@ cmake_minimum_required(VERSION 2.8)
 project(ecto_daft)
 
 find_package(catkin REQUIRED)
+
+# Read stack.xml and do some magic (?)
 catkin_stack()
 
-set(${PROJECT_NAME}_GITHUB_URL https://github.com/dgossow/ecto_daft)
+# Read setup.py and generate __init__.py in gen/py/ecto_daft
+catkin_python_setup()
 
-add_definitions(-Wno-strict-aliasing -Wall -Werror)
+# Make sure everything actually goes into gen/py/ecto_daft
+# Otherwise, ecto will cut off the first 4 letters of your
+# module name and use that as a directory name (What sense does that make??)
+set_ecto_install_package_name(ecto_daft)
+
+# What does this do? 
+set(${PROJECT_NAME}_GITHUB_URL https://github.com/dgossow/ecto_daft)
 
 find_package(OpenCV REQUIRED core imgproc highgui calib3d)
 find_package(daft REQUIRED)
@@ -19,7 +28,5 @@ include_directories(SYSTEM ${OpenCV_INCLUDE_DIRS})
 if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 endif()
-
-set_ecto_install_package_name(ecto_daft)
 
 add_subdirectory(cells)

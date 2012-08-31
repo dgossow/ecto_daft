@@ -1,6 +1,6 @@
 #include <ecto/ecto.hpp>
 
-ECTO_DEFINE_MODULE(ecto_daft)
+ECTO_DEFINE_MODULE(daft)
 {
 
 }
