@@ -1,6 +1,8 @@
 #include <ecto/ecto.hpp>
 #include <daft/daft.h>
 
+using ecto::tendrils;
+
 /** Cell for DAFT feature detection and descriptor extraction
  */
 struct DAFT
@@ -16,10 +18,8 @@ struct DAFT
   {
     inputs.declare < cv::Mat > ("image", "The image.");
     inputs.declare < cv::Mat > ("depth", "The depth image");
-    inputs.declare < cv::Mat > ("K", "The intrinsic camera matrix");
     inputs.declare < cv::Mat > ("mask", "A mask for rejecting keypoints.");
-    inputs.declare < std::vector<cv::KeyPoint> > ("keypoints", "The keypoints.");
-    inputs.declare < cv::Mat > ("points", "2d points.");
+    inputs.declare < cv::Mat > ("K", "The intrinsic camera matrix");
 
     outputs.declare < std::vector<cv::KeyPoint> > ("keypoints", "The keypoints.");
     outputs.declare < cv::Mat > ("descriptors", "The descriptors per keypoints");
@@ -28,57 +28,46 @@ struct DAFT
   void
   configure(const tendrils& params, const tendrils& inputs, const tendrils& outputs)
   {
-    /*
-     cv::DAFT::CommonParams DAFT_params;
-     DAFT_params.first_level_ = 0;
-     DAFT_params.n_levels_ = params.get<int>("n_levels");
-     DAFT_params.scale_factor_ = params.get<float>("scale_factor");
-     DAFT_ = cv::DAFT(params.get<int>("n_features"), DAFT_params);
-     */
+    cv::daft::DAFT::DetectorParams p_det;
+    cv::daft::DAFT::DescriptorParams p_desc;
+
+    p_det.max_num_kp_ = params.get<int>("n_features");
+
+    DAFT_ = cv::daft::DAFT( p_det, p_desc );
   }
 
   int
   process(const tendrils& inputs, const tendrils& outputs)
   {
-    /*
-     std::vector < cv::KeyPoint > keypoints;
-     inputs["keypoints"] >> keypoints;
-     cv::Mat image, mask;
-     inputs["image"] >> image;
-     inputs["mask"] >> mask;
-     cv::Mat desc;
-     DAFT_(image, mask, keypoints, desc, !keypoints.empty()); //use the provided keypoints if they were given.
-     if (!mask.empty())
-     {
-     //need to do keypoint validation as DAFT is broken.
-     cv::Mat good_desc;
-     std::vector < cv::KeyPoint > good_keypoints;
-     good_keypoints.reserve(keypoints.size());
-     good_desc.reserve(32 * keypoints.size());
-     for (int i = 0, end = keypoints.size(); i < end; ++i)
-     {
-     const cv::Point2f& p2d = keypoints[i].pt;
-     int u = p2d.x + 0.5f;
-     int v = p2d.y + 0.5f;
-     if (mask.at < uchar > (v, u))
-     {
-     good_keypoints.push_back(keypoints[i]);
-     good_desc.push_back(desc.row(i));
-     }
-     }
-     outputs["keypoints"] << good_keypoints;
-     outputs["descriptors"] << good_desc;
-     }
-     else
-     {
-     outputs["keypoints"] << keypoints;
-     outputs["descriptors"] << desc;
-     }
-     */
+    // get inputs
+    cv::Mat image, depth;
+    cv::Mat1b mask;
+    cv::Matx33f K;
+    inputs["image"] >> image;
+    inputs["depth"] >> depth;
+    inputs["mask"] >> mask;
+    inputs["K"] >> K;
+
+    cv::Mat1f descriptors;
+    std::vector<cv::KeyPoint3D> keypoints3d;
+
+    DAFT_( image, mask, depth, K, keypoints3d, descriptors );
+
+    //convert Keypoint3D to Keypoint
+    std::vector<cv::KeyPoint> keypoints( keypoints3d.size() );
+
+    for ( size_t i=0; i<keypoints3d.size(); i++ )
+    {
+      keypoints[i] = keypoints3d[i];
+    }
+
+    outputs["keypoints"] << keypoints;
+    outputs["descriptors"] << descriptors;
+
     return ecto::OK;
   }
 
-  cv::DAFT DAFT_;
+  cv::daft::DAFT DAFT_;
 };
 
 ECTO_CELL(features2d, DAFT, "DAFT",

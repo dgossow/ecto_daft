@@ -12,6 +12,7 @@
   <build_depends>boost</build_depends>
   <build_depends>ecto</build_depends>
   <build_depends>opencv2</build_depends>
+  <build_depends>daft</build_depends>
   <depends>boost</depends>
   <depends>ecto</depends>
   <depends>opencv2</depends>
