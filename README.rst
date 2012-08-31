@@ -2,9 +2,9 @@ ecto_daft
 ========================================
 
 ecto_daft contains ecto bindings to use DAFT for feature detection
-and description:
+and description[1]_.
 
-``D. Gossow, D. Weikersdorfer, and M. Beetz, "Distinctive Texture Features from Perspective-Invariant Keypoints," in International Conference on Pattern Recognition (ICPR), 2012.``
+
 
 To use it, you need to put the DAFT library into your workspace:
 https://github.com/dgossow/daft.
@@ -25,3 +25,6 @@ Code Style
 If you are using eclipse, you may use the style file available here:
   
   https://github.com/plasmodic/ecto/raw/master/misc/ecto.style.xml
+
+
+.. [1] D. Gossow, D. Weikersdorfer, and M. Beetz, "Distinctive Texture Features from Perspective-Invariant Keypoints," in International Conference on Pattern Recognition (ICPR), 2012.
