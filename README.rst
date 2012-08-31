@@ -8,7 +8,8 @@ To use it, you also need to put the DAFT library into your workspace
 (https://github.com/dgossow/daft). If you use rosinstall, just put
 this into your .rosinstall file:
 
-.. literalinclude:: install/ecto_daft.rosinstall
+``- git: {local-name: daft, uri: 'https://github.com/dgossow/daft.git'}``
+``- git: {local-name: ecto_daft, uri: 'https://github.com/dgossow/ecto_daft.git'}``
 
 
 Dependencies
