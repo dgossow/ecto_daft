@@ -1,0 +1,2 @@
+- git: {local-name: daft, uri: 'https://github.com/dgossow/daft.git'}
+- git: {local-name: ecto_daft, uri: 'https://github.com/dgossow/ecto_daft.git'}

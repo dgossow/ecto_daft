@@ -5,7 +5,13 @@ ecto_daft contains ecto bindings to use DAFT for feature detection
 and description [1]_.
 
 To use it, you need to put the DAFT library into your workspace
-(https://github.com/dgossow/daft).
+(https://github.com/dgossow/daft). If you use rosinstall, just put
+this into your .rosinstall file:
+
+.. literalinclude:: install/ecto_daft.rosinstall
+    :language: yaml
+
+
 
 Dependencies
 --------------------------------------------------------------------------------
