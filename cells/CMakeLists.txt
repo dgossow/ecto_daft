@@ -1,7 +1,3 @@
-# find libs
-find_package(OpenCV REQUIRED)
-find_package(daft REQUIRED)
-include_directories(${daft_INCLUDE_DIRS})
 
 # define ecto module
 ectomodule(daft
