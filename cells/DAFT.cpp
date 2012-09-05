@@ -65,7 +65,7 @@ struct DAFT
 
     outputs["keypoints3d"] << keypoints3d;
     outputs["keypoints"] << keypoints;
-    outputs["descriptors"] << descriptors;
+    outputs["descriptors"] << cv::Mat(descriptors);
 
     return ecto::OK;
   }
@@ -73,5 +73,5 @@ struct DAFT
   cv::daft::DAFT DAFT_;
 };
 
-ECTO_CELL(ecto_daft, DAFT, "DAFT",
+ECTO_CELL(daft, DAFT, "DAFT",
     "A DAFT detector. Takes an rgbd image and a mask, and computes keypoints and descriptors.");
