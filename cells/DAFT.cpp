@@ -47,7 +47,7 @@ struct DAFT
 
     image = inputs.get< cv::Mat >("image");
     depth = inputs.get< cv::Mat >("depth");
-    depth = inputs.get< cv::Mat >("mask");
+    mask = inputs.get< cv::Mat >("mask");
     K = inputs.get< cv::Mat >("K");
 
     cv::Mat1f descriptors;

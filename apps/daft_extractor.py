@@ -31,7 +31,6 @@ import ecto
 
 from ecto_opencv.highgui import imshow
 from ecto.opts import run_plasm, scheduler_options
-from ecto_image_pipeline.io.source import create_source
 from ecto_opencv.features2d import DrawKeypoints
 from ecto_daft import daft
 
@@ -50,8 +49,9 @@ if __name__ == '__main__':
     plasm = ecto.Plasm()
 
     #setup the input source, grayscale conversion
+    from ecto_image_pipeline.io.source import create_source
     from ecto_openni import SXGA_RES, FPS_15, VGA_RES, FPS_30
-    source = create_source('image_pipeline','OpenNISource',image_mode=VGA_RES,image_fps=FPS_30)
+    source = create_source('image_pipeline','OpenNISource',image_mode=SXGA_RES,image_fps=FPS_15)
 
     #
     mydaft = daft.DAFT(n_features=500)
@@ -71,6 +71,9 @@ if __name__ == '__main__':
                     
                     # show the image
                     kpdrawer['image'] >> imshow(name='3D Keypoints',waitKey=1)[:],
+                                        
+                    # show the depth image
+                    source['depth'] >> imshow(name='Depth',waitKey=1)[:],
                                         
                     ]
     
