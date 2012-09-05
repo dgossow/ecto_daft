@@ -1,6 +1,6 @@
 
 # define ecto module
-ectomodule(daft
+ectomodule(daft DESTINATION ecto_daft INSTALL
   module.cpp
   DAFT.cpp
   )
@@ -9,6 +9,3 @@ ectomodule(daft
 link_ecto(daft
     ${OpenCV_LIBRARIES}
     ${daft_LIBRARIES})
-
-#create 'install' rules
-install_ecto_module(daft)
