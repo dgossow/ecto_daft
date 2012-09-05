@@ -33,7 +33,7 @@ from ecto_opencv.highgui import imshow
 from ecto.opts import run_plasm, scheduler_options
 from ecto_image_pipeline.io.source import create_source
 from ecto_opencv.features2d import DrawKeypoints
-from ecto_daft import DAFT
+from ecto_daft import daft
 
 def parse_args():
     import argparse
@@ -52,15 +52,25 @@ if __name__ == '__main__':
     #setup the input source, grayscale conversion
     from ecto_openni import SXGA_RES, FPS_15, VGA_RES, FPS_30
     source = create_source('image_pipeline','OpenNISource',image_mode=VGA_RES,image_fps=FPS_30)
-    
-    daft = DAFT(n_features=500)
+
+    #
+    mydaft = daft.DAFT(n_features=500)
+
+    #
+    kpdrawer = daft.DrawKeypoints3D()
 
     connections = [ # tunnel Kinect output to DAFT
-                    source['depth'] >> daft['depth'],
-                    source['K'] >> daft['K'],
+                    source['K'] >> mydaft['K'],
+                    source['depth'] >> mydaft['depth'],
+                    source['image'] >> mydaft['image'],
+                    source['mask'] >> mydaft['mask'],
+
+                    # draw keypoints
+                    source['image'] >> kpdrawer['image'],
+                    mydaft['keypoints3d'] >> kpdrawer['keypoints3d'],
                     
                     # show the image
-                    source['image'] >> imshow(name='original',waitKey=1)[:],
+                    kpdrawer['image'] >> imshow(name='3D Keypoints',waitKey=1)[:],
                                         
                     ]
     
