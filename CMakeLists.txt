@@ -25,3 +25,4 @@ if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
 endif()
 
 add_subdirectory(cells)
+add_subdirectory(test)
