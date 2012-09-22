@@ -1,4 +1,4 @@
-<stack>
+<package>
   <name>ecto_daft</name>
   <version>0.4.2</version>
   <description>Ecto bindings for the DAFT library.</description>
@@ -8,12 +8,13 @@
   <copyright>Willow Garage</copyright>
 
   <url>https://ias.in.tum.de/people/gossow/rgbd</url>
-  <build_depends>catkin</build_depends>
-  <build_depends>boost</build_depends>
-  <build_depends>ecto</build_depends>
-  <build_depends>opencv2</build_depends>
-  <build_depends>daft</build_depends>
-  <depends>boost</depends>
-  <depends>ecto</depends>
-  <depends>opencv2</depends>
-</stack>
+  <build_depend>catkin</build_depend>
+  <build_depend>boost</build_depend>
+  <build_depend>ecto</build_depend>
+  <build_depend>opencv2</build_depend>
+  <build_depend>daft</build_depend>
+
+  <run_depend>boost</run_depend>
+  <run_depend>ecto</run_depend>
+  <run_depend>opencv2</run_depend>
+</package>

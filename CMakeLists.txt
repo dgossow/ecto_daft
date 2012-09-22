@@ -4,7 +4,11 @@ project(ecto_daft)
 find_package(catkin REQUIRED)
 
 # Read stack.xml and do some magic (?)
+if (${catkin_VERSION} VERSION_GREATER "0.5.26")
+catkin_package()
+else()
 catkin_stack()
+endif()
 
 # Read setup.py and generate __init__.py in gen/py/ecto_daft
 catkin_python_setup()
