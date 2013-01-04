@@ -5,10 +5,8 @@
   <author email="dgossow@willowgarage.com">David Gossow</author>
   <maintainer email="dgossow@willowgarage.com">David Gossow</maintainer>
   <license>BSD</license>
-  <copyright>Willow Garage</copyright>
 
   <url>https://ias.in.tum.de/people/gossow/rgbd</url>
-  <build_depend>catkin</build_depend>
   <build_depend>boost</build_depend>
   <build_depend>ecto</build_depend>
   <build_depend>opencv2</build_depend>
@@ -17,4 +15,6 @@
   <run_depend>boost</run_depend>
   <run_depend>ecto</run_depend>
   <run_depend>opencv2</run_depend>
+
+  <buildtool_depend>catkin</buildtool_depend>
 </package>
